@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ancient Wisdom & Universal Truths</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .wisdom-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .wisdom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .quote {
+            font-size: 1.4em;
+            line-height: 1.6;
+            color: #34495e;
+            margin-bottom: 20px;
+            font-style: italic;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 3em;
+            color: #667eea;
+            position: absolute;
+            top: -10px;
+            left: -20px;
+            opacity: 0.5;
+        }
+
+        .quote::after {
+            content: '"';
+            font-size: 3em;
+            color: #667eea;
+            position: absolute;
+            bottom: -30px;
+            right: -20px;
+            opacity: 0.5;
+        }
+
+        .author {
+            font-size: 1.1em;
+            color: #7f8c8d;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .explanation {
+            font-size: 1em;
+            line-height: 1.5;
+            color: #5a6c7d;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            margin: 20px 10px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .category {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .loading {
+            opacity: 0.7;
+            transform: scale(0.98);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .quote {
+                font-size: 1.2em;
+            }
+            
+            .wisdom-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ancient Wisdom & Universal Truths</h1>
+        
+        <div class="wisdom-card" id="wisdomCard">
+            <div class="category" id="category">Delphic Maxim</div>
+            <div class="quote" id="quote">Know Thyself</div>
+            <div class="author" id="author">Inscription at the Temple of Apollo, Delphi</div>
+            <div class="explanation" id="explanation">
+                One of the three maxims inscribed at Delphi, this ancient wisdom emphasizes self-awareness as the foundation of all knowledge. Socrates famously stated that "the unexamined life is not worth living," echoing this principle that understanding ourselves—our motivations, limitations, and potential—is essential for wisdom and personal growth.
+            </div>
+        </div>
+        
+        <button class="button" onclick="generateWisdom()">🎲 New Wisdom</button>
+        <button class="button" onclick="toggleCategory()">🔄 Switch Category</button>
+    </div>
+
+    <script>
+        const wisdomData = {
+            delphic: [
+                {
+                    quote: "Know Thyself",
+                    author: "Inscription at the Temple of Apollo, Delphi",
+                    explanation: "One of the three maxims inscribed at Delphi, this ancient wisdom emphasizes self-awareness as the foundation of all knowledge. Socrates famously stated that 'the unexamined life is not worth living,' echoing this principle that understanding ourselves—our motivations, limitations, and potential—is essential for wisdom and personal growth."
+                },
+                {
+                    quote: "Nothing in Excess",
+                    author: "Inscription at the Temple of Apollo, Delphi",
+                    explanation: "This maxim advocates for moderation and balance in all aspects of life. It warns against the dangers of extremism and excess, whether in pleasure, ambition, or any human pursuit. Aristotle later developed this concept into his doctrine of the 'Golden Mean'—that virtue lies between deficiency and excess."
+                },
+                {
+                    quote: "Surety Brings Ruin",
+                    author: "Inscription at the Temple of Apollo, Delphi",
+                    explanation: "This profound warning speaks to the dangers of overconfidence and hubris. When we become too certain of our knowledge, position, or righteousness, we close ourselves to learning and growth. This maxim encourages humility and the recognition that wisdom includes acknowledging what we do not know."
+                },
+                {
+                    quote: "Practice Makes Perfect",
+                    author: "Delphic Teaching",
+                    explanation: "Beyond simple skill acquisition, this maxim emphasizes that excellence in any field requires consistent practice and dedication. Whether in arts, philosophy, or personal development, repeated effort and refinement lead to mastery. This principle was fundamental to the educational philosophy of ancient Greece."
+                },
+                {
+                    quote: "Control Your Passions",
+                    author: "Delphic Wisdom",
+                    explanation: "This teaching emphasizes the importance of emotional intelligence and self-mastery. Rather than being ruled by anger, desire, fear, or other strong emotions, the wise person learns to acknowledge these feelings while maintaining rational control over their actions. This concept influenced Stoic philosophy significantly."
+                },
+                {
+                    quote: "Honor the Gods",
+                    author: "Delphic Maxim",
+                    explanation: "This maxim speaks to the importance of reverence and humility before forces greater than ourselves. Whether interpreted religiously or metaphorically, it reminds us to acknowledge our limitations and maintain respect for the natural order, tradition, and the wisdom of our ancestors."
+                },
+                {
+                    quote: "Respect Your Parents",
+                    author: "Delphic Teaching",
+                    explanation: "This principle emphasizes gratitude and respect for those who gave us life and nurtured us. It extends beyond mere obligation to recognizing the intergenerational wisdom and the importance of maintaining strong family bonds as the foundation of social harmony."
+                },
+                {
+                    quote: "Shun Evil",
+                    author: "Delphic Wisdom",
+                    explanation: "This direct command emphasizes active avoidance of harmful actions and influences. It requires not just avoiding wrongdoing ourselves, but also distancing ourselves from toxic environments and negative influences that could corrupt our character and judgment."
+                },
+                {
+                    quote: "Cultivate Honor",
+                    author: "Delphic Maxim",
+                    explanation: "This teaching emphasizes the development of personal integrity and reputation through consistent ethical behavior. Honor in ancient Greek culture meant living up to one's highest potential and maintaining dignity in all circumstances, even when no one is watching."
+                },
+                {
+                    quote: "Seek Wisdom",
+                    author: "Delphic Oracle",
+                    explanation: "This maxim encourages the active pursuit of knowledge and understanding throughout life. It suggests that wisdom is not something passively received but must be actively sought through study, reflection, conversation with wise people, and engagement with challenging ideas."
+                },
+                {
+                    quote: "Speak Truth",
+                    author: "Delphic Teaching",
+                    explanation: "This principle emphasizes honesty and authenticity in communication. In ancient Greece, speaking truth was considered essential for maintaining personal integrity and social trust. It involves not just avoiding lies but expressing oneself authentically and constructively."
+                },
+                {
+                    quote: "Be Moderate",
+                    author: "Delphic Wisdom",
+                    explanation: "Similar to 'Nothing in Excess,' this maxim specifically addresses personal behavior and consumption. It encourages finding balance in eating, drinking, spending, and all forms of consumption, recognizing that excess in any area leads to imbalance and potential harm."
+                },
+                {
+                    quote: "Learn from Failure",
+                    author: "Delphic Philosophy",
+                    explanation: "This teaching recognizes that setbacks and mistakes are essential teachers on the path to wisdom. Rather than being discouraged by failure, the wise person analyzes what went wrong, extracts lessons, and applies this knowledge to future endeavors."
+                },
+                {
+                    quote: "Guard Your Tongue",
+                    author: "Delphic Maxim",
+                    explanation: "This wisdom emphasizes the power of words and the importance of thoughtful speech. It encourages speaking only when necessary, choosing words carefully, and avoiding gossip, slander, or speech that could harm others or ourselves."
+                },
+                {
+                    quote: "Value Friendship",
+                    author: "Delphic Teaching",
+                    explanation: "This principle recognizes friendship as one of life's greatest treasures. True friendship involves mutual support, honest feedback, shared values, and commitment to each other's growth and well-being. It was considered essential for a fulfilling life in ancient Greek philosophy."
+                }
+            ],
+            universal: [
+                {
+                    quote: "The journey of a thousand miles begins with one step",
+                    author: "Lao Tzu, Tao Te Ching",
+                    explanation: "This ancient Chinese wisdom teaches that even the most overwhelming tasks or ambitious goals can be achieved by taking that crucial first step. It reminds us not to be paralyzed by the magnitude of our aspirations, but rather to focus on beginning with small, manageable actions that gradually build momentum toward our objectives."
+                },
+                {
+                    quote: "This too shall pass",
+                    author: "Persian Adage",
+                    explanation: "Often attributed to Persian poets and later popularized in Western culture, this phrase serves as both comfort during difficult times and a reminder of impermanence during good times. It encapsulates the Buddhist concept of impermanence and the cyclical nature of existence, reminding us that all circumstances—pleasant or painful—are temporary."
+                },
+                {
+                    quote: "As you sow, so shall you reap",
+                    author: "Galatians 6:7, The Bible",
+                    explanation: "This principle of cause and effect appears across many spiritual traditions. It teaches that our actions have consequences, and that we ultimately harvest what we plant in life. Whether viewed as karma, divine justice, or simply the natural consequences of behavior, it emphasizes personal responsibility and the long-term impact of our choices."
+                },
+                {
+                    quote: "The only constant in life is change",
+                    author: "Heraclitus, Greek Philosopher",
+                    explanation: "Heraclitus famously stated that 'you cannot step into the same river twice,' emphasizing that everything in existence is in constant flux. This wisdom teaches us to embrace change rather than resist it, and to find stability not in external circumstances but in our ability to adapt and grow through life's inevitable transformations."
+                },
+                {
+                    quote: "Know that you don't know",
+                    author: "Socrates, Greek Philosopher",
+                    explanation: "Socrates considered this recognition of ignorance to be the beginning of wisdom. By acknowledging the limits of our knowledge, we open ourselves to learning and growth. This intellectual humility prevents dogmatism and encourages continuous inquiry, making us more receptive to new ideas and better equipped to challenge our assumptions."
+                },
+                {
+                    quote: "Do unto others as you would have them do unto you",
+                    author: "Matthew 7:12, The Bible",
+                    explanation: "Known as the Golden Rule, this principle appears in virtually every major religious and philosophical tradition. It serves as a foundation for empathy, compassion, and ethical behavior, encouraging us to consider others' perspectives and treat them with the same dignity and kindness we desire for ourselves."
+                },
+                {
+                    quote: "The obstacle is the path",
+                    author: "Zen Buddhist Proverb",
+                    explanation: "This profound teaching suggests that challenges and difficulties are not barriers to our journey but are actually integral parts of our growth and development. Rather than avoiding or resenting obstacles, we should embrace them as opportunities for learning, strength-building, and transformation."
+                },
+                {
+                    quote: "Be the change you wish to see in the world",
+                    author: "Mahatma Gandhi",
+                    explanation: "Gandhi's famous words emphasize personal responsibility and the power of individual action. Rather than waiting for others or circumstances to change, we should embody the values and behaviors we want to see in the world. This principle of personal transformation as the foundation for social change has inspired countless movements for positive social transformation."
+                },
+                {
+                    quote: "Patience is bitter, but its fruit is sweet",
+                    author: "Aristotle",
+                    explanation: "This observation from Aristotle recognizes that delayed gratification and perseverance through difficult periods ultimately leads to greater rewards. The ability to wait, endure temporary discomfort, and maintain long-term perspective is essential for achieving meaningful goals and personal growth."
+                },
+                {
+                    quote: "The cave you fear to enter holds the treasure you seek",
+                    author: "Joseph Campbell",
+                    explanation: "This modern wisdom from the mythologist Joseph Campbell encapsulates the hero's journey concept. It suggests that our greatest growth comes from confronting what we fear most, and that the challenges we avoid are often precisely where our greatest potential for transformation lies."
+                },
+                {
+                    quote: "Yesterday is history, tomorrow is a mystery, today is a gift",
+                    author: "Eleanor Roosevelt",
+                    explanation: "This elegant formulation reminds us to focus on the present moment rather than dwelling on past regrets or future anxieties. The present moment is all we truly possess, and treating it as a gift helps us live more fully and appreciate the opportunities available right now."
+                },
+                {
+                    quote: "What you think, you become",
+                    author: "Buddha",
+                    explanation: "This fundamental Buddhist teaching emphasizes that our thoughts shape our reality. Our mental patterns influence our emotions, behaviors, and ultimately our life circumstances. By cultivating positive, compassionate, and wise thoughts, we transform not only our inner experience but our impact on the world."
+                },
+                {
+                    quote: "Fall seven times, stand up eight",
+                    author: "Japanese Proverb",
+                    explanation: "This Japanese wisdom emphasizes resilience and persistence in the face of repeated setbacks. It recognizes that failure is an inevitable part of growth and that true strength lies not in avoiding falls but in consistently rising again, learning from each experience, and continuing forward."
+                },
+                {
+                    quote: "The best time to plant a tree was 20 years ago. The second best time is now",
+                    author: "Chinese Proverb",
+                    explanation: "This practical wisdom addresses procrastination and regret by acknowledging that while we cannot change the past, we can always begin again in the present. It encourages immediate action rather than waiting for perfect conditions, recognizing that growth takes time regardless of when we begin."
+                },
+                {
+                    quote: "Not all those who wander are lost",
+                    author: "J.R.R. Tolkien",
+                    explanation: "From 'The Lord of the Rings,' this line celebrates the value of exploration and non-linear paths through life. It suggests that wandering, whether physical or intellectual, serves important purposes in personal growth and that apparent aimlessness may actually be purposeful exploration."
+                },
+                {
+                    quote: "When the student is ready, the teacher will appear",
+                    author: "Buddhist Proverb",
+                    explanation: "This wisdom suggests that learning opportunities are always available, but we must be prepared to recognize and receive them. It emphasizes the importance of maintaining openness, humility, and readiness to learn from whatever life presents, rather than waiting for ideal circumstances or formal instruction."
+                },
+                {
+                    quote: "Pain is inevitable, suffering is optional",
+                    author: "Haruki Murakami",
+                    explanation: "This modern insight distinguishes between physical or emotional pain, which is an unavoidable part of human experience, and suffering, which often results from our resistance to pain or the stories we tell ourselves about it. It suggests that while we cannot eliminate pain, we can reduce suffering through acceptance and changing our relationship to difficult experiences."
+                },
+                {
+                    quote: "You can't stop the waves, but you can learn to surf",
+                    author: "Jon Kabat-Zinn",
+                    explanation: "This metaphor from mindfulness teaching recognizes that we cannot control all aspects of life, but we can develop skills to navigate challenges more effectively. Rather than fighting against the inevitable difficulties of life, wisdom lies in learning to work with them skillfully and gracefully."
+                },
+                {
+                    quote: "The wound is the place where the Light enters you",
+                    author: "Rumi",
+                    explanation: "This beautiful insight from the Sufi poet suggests that our vulnerabilities and painful experiences can become sources of growth, compassion, and spiritual development. Our wounds, when properly acknowledged and healed, can make us more empathetic and wise, allowing light and understanding to enter our lives."
+                },
+                {
+                    quote: "Life is what happens to you while you're busy making other plans",
+                    author: "John Lennon",
+                    explanation: "This observation reminds us that life unfolds in the present moment, regardless of our plans or expectations. While planning has its place, we must also remain open to unexpected opportunities and experiences, as these often constitute the most meaningful and memorable aspects of our journey."
+                },
+                {
+                    quote: "The only way out is through",
+                    author: "Robert Frost",
+                    explanation: "This wisdom from the American poet recognizes that avoiding difficulties only prolongs them. True resolution comes from facing challenges directly, working through them step by step, and emerging stronger on the other side. This principle applies to emotional healing, personal growth, and overcoming life's inevitable obstacles."
+                },
+                {
+                    quote: "What lies behind us and what lies before us are tiny matters compared to what lies within us",
+                    author: "Ralph Waldo Emerson",
+                    explanation: "Emerson emphasizes that our inner resources, character, and potential are far more significant than our past experiences or future circumstances. This perspective shifts focus from external conditions to internal development, recognizing that our greatest power lies in cultivating wisdom, courage, and compassion within ourselves."
+                }
+            ],
+            eastern: [
+                {
+                    quote: "A journey of a thousand miles begins beneath your feet",
+                    author: "Lao Tzu",
+                    explanation: "This variation of the famous Taoist wisdom emphasizes that great accomplishments begin with the immediate present moment. Rather than focusing on the distant destination, we should concentrate on taking action now, from where we currently stand, with the resources we presently have available."
+                },
+                {
+                    quote: "Empty your mind, be formless, shapeless—like water",
+                    author: "Bruce Lee",
+                    explanation: "Bruce Lee's famous metaphor draws from Taoist philosophy, suggesting that we should be adaptable and flexible like water, which can flow around obstacles or crash through them. This wisdom teaches us to let go of rigid thinking and fixed expectations, instead developing the ability to respond appropriately to whatever circumstances we encounter."
+                },
+                {
+                    quote: "Before enlightenment, chop wood, carry water. After enlightenment, chop wood, carry water",
+                    author: "Zen Buddhist Saying",
+                    explanation: "This Zen teaching emphasizes that spiritual awakening doesn't change the fundamental nature of daily life. True wisdom lies not in escaping ordinary activities but in approaching them with transformed consciousness. The enlightened person continues with the same daily tasks but with a completely different relationship to the activity and the self performing it."
+                },
+                {
+                    quote: "The mind is everything. What you think you become",
+                    author: "Buddha",
+                    explanation: "This fundamental Buddhist teaching emphasizes the creative power of consciousness. Our thoughts shape our perception of reality, influence our emotions and behaviors, and ultimately determine the quality of our life experience. By cultivating positive, compassionate, and wise thoughts, we transform not only our inner experience but our impact on the world around us."
+                }
+            ],
+            modern: [
+                {
+                    quote: "We are what we repeatedly do. Excellence, then, is not an act but a habit",
+                    author: "Aristotle",
+                    explanation: "This insight from Aristotle's Nicomachean Ethics emphasizes that character and achievement are not results of occasional heroic efforts but of consistent daily practices. By establishing positive habits and consistently practicing them, we gradually shape our character and capabilities, making excellence a natural expression of who we are rather than something we must consciously strive for."
+                },
+                {
+                    quote: "The unexamined life is not worth living",
+                    author: "Socrates",
+                    explanation: "Socrates' famous declaration at his trial emphasizes that self-reflection and critical thinking are essential to a meaningful human existence. This doesn't mean we must constantly analyze everything, but rather that we should regularly pause to consider whether our lives align with our values, whether our actions reflect our highest aspirations, and whether we're growing in wisdom and compassion."
+                },
+                {
+                    quote: "He who has a why to live can bear almost any how",
+                    author: "Friedrich Nietzsche",
+                    explanation: "Nietzsche's profound observation highlights the importance of meaning and purpose in human resilience. When we have a clear sense of why we're doing something—whether it's caring for loved ones, pursuing important goals, or serving a cause greater than ourselves—we can endure significant hardship and overcome substantial obstacles that might otherwise seem insurmountable."
+                }
+            ]
+        };
+
+        let currentCategory = 'delphic';
+        let currentIndex = 0;
+
+        function generateWisdom() {
+            const wisdomCard = document.getElementById('wisdomCard');
+            const category = document.getElementById('category');
+            const quote = document.getElementById('quote');
+            const author = document.getElementById('author');
+            const explanation = document.getElementById('explanation');
+
+            // Add loading effect
+            wisdomCard.classList.add('loading');
+            
+            setTimeout(() => {
+                const categoryData = wisdomData[currentCategory];
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * categoryData.length);
+                } while (newIndex === currentIndex && categoryData.length > 1);
+                
+                currentIndex = newIndex;
+                const selectedWisdom = categoryData[currentIndex];
+                
+                // Update content
+                category.textContent = getCategoryName(currentCategory);
+                quote.textContent = selectedWisdom.quote;
+                author.textContent = selectedWisdom.author;
+                explanation.textContent = selectedWisdom.explanation;
+                
+                // Remove loading effect and add fade-in
+                wisdomCard.classList.remove('loading');
+                wisdomCard.classList.add('fade-in');
+                
+                // Remove fade-in class after animation completes
+                setTimeout(() => {
+                    wisdomCard.classList.remove('fade-in');
+                }, 600);
+            }, 300);
+        }
+
+        function toggleCategory() {
+            const categories = Object.keys(wisdomData);
+            const currentIndex = categories.indexOf(currentCategory);
+            const nextIndex = (currentIndex + 1) % categories.length;
+            currentCategory = categories[nextIndex];
+            generateWisdom();
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                delphic: 'Delphic Maxim',
+                universal: 'Universal Truth',
+                eastern: 'Eastern Wisdom',
+                modern: 'Philosophical Insight'
+            };
+            return names[category] || 'Wisdom';
+        }
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === ' ' || event.key === 'Enter') {
+                event.preventDefault();
+                generateWisdom();
+            } else if (event.key === 'c' || event.key === 'C') {
+                event.preventDefault();
+                toggleCategory();
+            }
+        });
+
+        // Initialize with a random wisdom
+        window.addEventListener('load', function() {
+            generateWisdom();
+        });
+    </script>
+</body>
+</html>
