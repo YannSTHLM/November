@@ -1,0 +1,41 @@
+# GitHub Pages Configuration
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# SEO and Social Media
+title: "Ancient Wisdom & Universal Truths"
+description: "An interactive collection of Delphic maxims and universal wisdom with detailed explanations"
+url: "https://yannsthlm.github.io"
+baseurl: "/November"
+
+# Author information
+author:
+  name: "Ancient Wisdom Collection"
+  email: "your.email@example.com"
+
+# SEO Keywords
+keywords: ["wisdom", "philosophy", "delphic maxims", "universal truths", "ancient wisdom", "life lessons", "spiritual teachings"]
+
+# Social Media
+facebook:
+  publisher: "Ancient Wisdom Collection"
+twitter:
+  username: "your_twitter_handle"
+  card: "summary_large_image"
+
+# Analytics (optional)
+google_analytics: "UA-XXXXXXXX-X"
+
+# Exclude files from processing
+exclude:
+  - "*.md"
+  - "Gemfile"
+  - "Gemfile.lock"
+  - "node_modules"
+  - "vendor/bundle/"
+  - "vendor/cache/"
+  - "vendor/gems/"
+  - "vendor/ruby/"
+  - "README.md"
